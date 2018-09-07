@@ -1,0 +1,25 @@
+Create a simple iOS client app for the github issues API:
+https://developer.github.com/v3/issues/
+
+Using this github project:
+https://github.com/grpc/grpc-swift
+
+- The user should see a list of issues of the repo, ordered by number of unique commenters, from most to least.
+- Each item in the list should show the title of the issue, the creation date of the issue, and the creator's username
+- The user should be able to tap an issue to see a detail view of the issue. The detail view should contain:
+- The Title of the issue
+- the full text of the issue
+- the author of the issue
+- The names of all the commenters, ordered by number of comments, most to least. If some commenters have the same number of comments, they should be ordered alphabetically.
+- Design and UX is up to you as long as the information is displayed clearly. Prefer standard iOS patterns when possible.
+
+Optional additions if you have time or interest:
+- Add some form of caching to improve user experience. Implementation is up to you.
+- Make the issue list paged or infinite scrolling
+- Write some unit tests for any parts of your app that could benefit from them
+- Add a text field to display issues from an arbitrary github project via the project's url rather than a hardcoded project
+
+Design Considerations:
+- The app can be written in Swift or Objective-c.
+- Focus on the functionality and clean architecture rather than the UI design. It should work correctly,  be robust, and not crash.
+- Use your judgement regarding the use of third-party frameworks. If you choose to use one, please provide your rationale for choosing this framework vs alternatives or native options.
