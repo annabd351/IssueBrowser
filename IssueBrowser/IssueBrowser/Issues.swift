@@ -28,17 +28,6 @@ struct Issue: Decodable {
     var uniqueCommenters: Set<User> = []
 }
 
-//struct IssueWithComments {
-//    let issue: Issue
-//
-//    // NOTE: Array copy is happening here...
-//    init(issue: Issue, comments: [Comment]) {
-//        self.issue = issue
-//        self.comments = comments
-//        self.uniqueCommenters = Set<User>(comments.map { $0.user })
-//    }
-//}
-
 struct User: Decodable {
     let login: String
 }

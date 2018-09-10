@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PromiseKit
 
 class ViewController: UIViewController {
 
@@ -16,30 +15,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-//        firstly {
-//            GitHub.issuesFor(repo: GitHub.testRepoName)
-//            }
-//            .done {
-//                result in
-//                print(result)
-//            }
-//            .catch {
-//                error in
-//                print(error)
-//        }
-        
-        firstly {
-            return GitHub.issuesFor(repo: GitHub.testRepoName)
-            }.done {
-                issues in
-                self.issues = issues
-            }.catch {
-                error in
-                print(error.localizedDescription)
-        }
-        
 
+        var gitHub: GitHub?
+        GitHub.createFor(repo: GitHub.testRepoName) {
+            result in
+            switch result {
+            case .success(let github):
+                gitHub = github
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

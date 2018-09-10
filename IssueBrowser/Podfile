@@ -7,8 +7,6 @@ target 'IssueBrowser' do
 
   # Pods for IssueBrowser
   pod 'Alamofire'
-  pod 'PromiseKit'
-  pod 'PromiseKit/Alamofire'
 
   target 'IssueBrowserTests' do
     inherit! :search_paths

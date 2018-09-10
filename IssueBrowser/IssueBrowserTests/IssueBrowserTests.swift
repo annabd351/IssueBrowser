@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import IssueBrowser
+import Alamofire
 
-import PromiseKit
+@testable import IssueBrowser
 
 class IssueBrowserTests: XCTestCase {
     
@@ -23,83 +23,83 @@ class IssueBrowserTests: XCTestCase {
         super.tearDown()
     }
     
-    // See if we can hit the GitHub endpoint.
-    func testValidAccessIssueEndpoint() {
+    // See if we can hit the GitHub endpoint and decode a response.
+    func testGitHubIssuesFor() {
+        // Uncomment to test the test itself -- should fail (unless the string is a valid repo)
+        // let testRepo = "jknasdfhhu81378fgh934hrfiasdhfjkhajkshd91398h4gh3rg"
         let testRepo = GitHub.testRepoName
         let expectation = XCTestExpectation()
-        firstly { GitHub.issuesFor(repo: testRepo) }
-            .done {
-                result in
-                print("Got \(result.count) issues")
+        GitHub.issuesFor(repo: testRepo) {
+            result in
+            switch result {
+            case .success:
                 XCTAssert(true)
                 expectation.fulfill()
-            }
-            .catch {
-                error in
+            case .failure(let error):
                 XCTFail(error.localizedDescription)
                 expectation.fulfill()
+            }
         }
         wait(for: [expectation], timeout: 10)
     }
     
-    // Make sure we can catch errors for an invalid repo
-    // NOTE: This is a non-deterministic test.  Check result carefully.
-    func testInvalidAccessIssueEndpoint() {
-        // This repo is not likely to exist, but it might...
-        let testRepo = UUID().uuidString
+    // Try fetching comments for an issue
+    func testGitHubCommentsFor() {
+        // Some test-the-test cases
+        // let testRepo = "jknasdfhhu81378fgh934hrfiasdhfjkhajkshd91398h4gh3rg"
+        // let testRepo = "annabd351/IssueBrowser"
+        let testRepo = GitHub.testRepoName
         let expectation = XCTestExpectation()
-        firstly { GitHub.issuesFor(repo: testRepo) }
-            .done {
-                result in
-                XCTFail("Returned \(result) from invalid repo \"\(testRepo)\"")
+        GitHub.issuesFor(repo: testRepo) {
+            result in
+            switch result {
+            case .success(let value) where value.isEmpty:
+                XCTFail("No issues for \(testRepo)")
+                expectation.fulfill()
+            case .success(let value):
+                handleComments(issue: value.first!)
+            case .failure(let error):
+                XCTFail(error.localizedDescription)
                 expectation.fulfill()
             }
-            .catch {
-                error in
-                XCTAssert(true)
-                expectation.fulfill()
         }
-        wait(for: [expectation], timeout: 10)
-    }
 
-    // Check handling of a repo with zero issues
-    func testEmptyIssueList() {
-        let repoWithNoIssues = "annabd351/IssueBrowser"
-        let expectation = XCTestExpectation()
-        firstly { GitHub.issuesFor(repo: repoWithNoIssues) }
-            .done {
+        func handleComments(issue: Issue) {
+            GitHub.commentsFor(issue: issue) {
                 result in
-                XCTAssertTrue(result.isEmpty)
-                expectation.fulfill()
+                switch result {
+                case .success:
+                    XCTAssert(true)
+                    expectation.fulfill()
+                case .failure(let error):
+                    XCTFail(error.localizedDescription)
+                    expectation.fulfill()
+                }
             }
-            .catch {
-                error in
-                XCTFail(error.localizedDescription)
-                expectation.fulfill()
         }
         wait(for: [expectation], timeout: 10)
     }
     
-    func testGetCommentsForIssue() {
+    // Create and fill in a GitHub instance
+    func testGitHubCreateFor() {
+        // Some test-the-test cases
+        // let testRepo = "jknasdfhhu81378fgh934hrfiasdhfjkhajkshd91398h4gh3rg"
+        // let testRepo = "annabd351/IssueBrowser"
         let testRepo = GitHub.testRepoName
         let expectation = XCTestExpectation()
-        firstly { GitHub.issuesFor(repo: testRepo) }
-            .then {
-                (issues: [Issue]) -> Promise<[Comment]> in
-                XCTAssertNotNil(issues.first, "No issues returned")
-                print(issues.first!)
-                return GitHub.commentsFor(issue: issues.first!)
-            }
-            .done {
-                (comments: [Comment]) in
-                print("Got \(comments.count) comments")
+        GitHub.createFor(repo: testRepo) {
+            result in
+            switch result {
+            case .success(let gitHub):
+                gitHub.issues.forEach {
+                    print($0.uniqueCommenters.count)
+                }
                 XCTAssert(true)
                 expectation.fulfill()
-            }
-            .catch {
-                error in
+            case .failure(let error):
                 XCTFail(error.localizedDescription)
                 expectation.fulfill()
+            }
         }
         wait(for: [expectation], timeout: 10)
     }
