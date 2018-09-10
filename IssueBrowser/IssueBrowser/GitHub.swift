@@ -35,7 +35,7 @@ private let decoder: JSONDecoder = {
 private let baseURL = URL(string: "https://api.github.com")!
 
 // Abstraction of the GitHub API itself
-struct GitHub {
+class GitHub {
     var issues: [Issue] = []
     
     static let testRepoName = "grpc/grpc-swift"
@@ -58,8 +58,8 @@ struct GitHub {
     
     // Get all issues for a repo.
     // TODO: Create generic function to process response and/or function conforming to Alamofire.DataResponseSerializer
-    static func issuesFor(repo: String, queue: DispatchQueue = concurrentQueue, completion: @escaping (Result<[Issue]>) -> ()) {
-        sessionManager.request(Endpoint.issues(repo: repo)).responseData(queue: serialQueue) {
+    static func issuesFor(repo: String, completion: @escaping (Result<[Issue]>) -> ()) {
+        sessionManager.request(Endpoint.issues(repo: repo)).responseData {
             response in
             switch response.result {
             case .success(let value):
@@ -78,8 +78,8 @@ struct GitHub {
     
     // Get the comments for one issue.
     // TODO: Create generic function to process response and/or function conforming to Alamofire.DataResponseSerializer
-    static func commentsFor(issue: Issue, queue: DispatchQueue = concurrentQueue, completion: @escaping (Result<[Comment]>) -> ()) {
-        sessionManager.request(issue.comments_url).responseData(queue: serialQueue) {
+    static func commentsFor(issue: Issue, completion: @escaping (Result<[Comment]>) -> ()) {
+        sessionManager.request(issue.comments_url).responseData {
             response in
             switch response.result {
             case .success(let value):
@@ -104,53 +104,41 @@ struct GitHub {
 
     // Create an instance of GitHub and fill it with all data
     static func createFor(repo: String, completion: @escaping (Result<GitHub>) -> ()) {
-        var instance = GitHub()
+        let instance = GitHub()
         
-        func getAllIssues() {
-            issuesFor(repo: repo, queue: serialQueue) {
-                result in
-                switch result {
-                case .success(let issues):
-                    instance.issues = issues
-                    getAllComments()
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
-        
-        func getAllComments() {
-            for index in 0..<instance.issues.count {
-
-
-                // Fetch all the comments serially
-                // TODO: Fetch the comments concurrently
-                commentsFor(issue: instance.issues[index], queue: serialQueue) {
-                    result in
-
-
-
-                    switch result {
-                    case .success(let comments):
-                        instance.issues[index].comments = comments
-                        instance.issues[index].uniqueCommenters = uniqueCommentersFor(comments: comments)
-                        let issue = instance.issues[index]
-                        print("index: \(index) \(issue.title) || comments: \(issue.comments.count) || unique = \(issue.uniqueCommenters.count)")
-                    case .failure(let error):
-                        assert(false)
-                        completion(.failure(error))
+        issuesFor(repo: repo) {
+            result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let issues):
+                instance.issues = issues
+                
+                let commentFetchGroup = DispatchGroup()
+                
+                for index in 0..<instance.issues.count {
+                    print("Getting issue \(index)")
+                    
+                    // Fetch all the comments serially
+                    // TODO: Fetch the comments concurrently
+                    commentFetchGroup.enter()
+                    commentsFor(issue: instance.issues[index]) {
+                        result in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success(let comments):
+                            instance.issues[index].comments = comments
+                            instance.issues[index].uniqueCommenters = uniqueCommentersFor(comments: comments)
+                        }
+                        commentFetchGroup.leave()
                     }
                 }
-
-                serialQueue.async {
-                    // This executes after all the comments have been fetched.
+                commentFetchGroup.notify(queue: serialQueue) {
                     completion(.success(instance))
                 }
             }
         }
-        
-        // Start the process
-        getAllIssues()
     }
 }
 

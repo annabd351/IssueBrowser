@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Issue: Decodable {
+class Issue: Decodable {
     let comments_url: URL
     let title: String
     let body: String

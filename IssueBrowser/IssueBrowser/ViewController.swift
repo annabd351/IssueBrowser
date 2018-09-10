@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var issues: [Issue] = []
+    var gitHub: GitHub!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,20 +19,19 @@ class ViewController: UIViewController {
         GitHub.createFor(repo: GitHub.testRepoName) {
             result in
             switch result {
-            case .success(let github):
-                self.issues = github.issues
-//                printStuff()
+            case .success(let gitHub):
+                self.gitHub = gitHub
+                printStuff()
             case .failure(let error):
                 print(error)
             }
         }
         
         func printStuff() {
-            print("Total issues: \(issues.count)")
-            issues.forEach {
-                print("Comment url: \($0.comments_url)")
-//                print("Comments: \($0.comments.count)")
-//                print("Unique comments: \($0.uniqueCommenters.count)")
+            print("Total issues: \(gitHub.issues.count)")
+            gitHub.issues.forEach {
+                print("Comments: \($0.comments.count)")
+                print("Unique comments: \($0.uniqueCommenters.count)")
             }
         }
     }
