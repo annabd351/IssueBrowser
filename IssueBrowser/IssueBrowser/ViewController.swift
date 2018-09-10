@@ -16,14 +16,23 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        var gitHub: GitHub?
         GitHub.createFor(repo: GitHub.testRepoName) {
             result in
             switch result {
             case .success(let github):
-                gitHub = github
+                self.issues = github.issues
+//                printStuff()
             case .failure(let error):
                 print(error)
+            }
+        }
+        
+        func printStuff() {
+            print("Total issues: \(issues.count)")
+            issues.forEach {
+                print("Comment url: \($0.comments_url)")
+//                print("Comments: \($0.comments.count)")
+//                print("Unique comments: \($0.uniqueCommenters.count)")
             }
         }
     }

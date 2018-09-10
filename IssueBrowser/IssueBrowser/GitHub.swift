@@ -22,7 +22,7 @@ private let sessionManager: SessionManager = {
 }()
 
 // Queues for GitHub network interactions
-//private let concurrentQueue = DispatchQueue(label: "GitHubConcurrentQueue" + UUID().uuidString, attributes: .concurrent)
+private let concurrentQueue = DispatchQueue(label: "GitHubConcurrentQueue" + UUID().uuidString, attributes: .concurrent)
 private let serialQueue = DispatchQueue(label: "GitHubSerialQueue" + UUID().uuidString)
 
 // Used for all JSON decoding
@@ -58,31 +58,27 @@ struct GitHub {
     
     // Get all issues for a repo.
     // TODO: Create generic function to process response and/or function conforming to Alamofire.DataResponseSerializer
-    static func issuesFor(repo: String, completion: @escaping (Result<[Issue]>) -> ()) {
-//        static func issuesFor(repo: String, queue: DispatchQueue = concurrentQueue, completion: @escaping (Result<[Issue]>) -> ()) {
-        sessionManager.request(Endpoint.issues(repo: repo)).responseString {
+    static func issuesFor(repo: String, queue: DispatchQueue = concurrentQueue, completion: @escaping (Result<[Issue]>) -> ()) {
+        sessionManager.request(Endpoint.issues(repo: repo)).responseData(queue: serialQueue) {
             response in
-            print(Endpoint.issues(repo: repo).url)
-            print(response)
-//            switch response.result {
-//            case .success(let value):
-//                do {
-//                    let issues = try decoder.decode([Issue].self, from: value)
-//                    completion(.success(issues))
-//                }
-//                catch {
-//                    completion(.failure(error))
-//                }
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
+            switch response.result {
+            case .success(let value):
+                do {
+                    let issues = try decoder.decode([Issue].self, from: value)
+                    completion(.success(issues))
+                }
+                catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
     
     // Get the comments for one issue.
     // TODO: Create generic function to process response and/or function conforming to Alamofire.DataResponseSerializer
-    static func commentsFor(issue: Issue, completion: @escaping (Result<[Comment]>) -> ()) {
-//        static func commentsFor(issue: Issue, queue: DispatchQueue = concurrentQueue, completion: @escaping (Result<[Comment]>) -> ()) {
+    static func commentsFor(issue: Issue, queue: DispatchQueue = concurrentQueue, completion: @escaping (Result<[Comment]>) -> ()) {
         sessionManager.request(issue.comments_url).responseData(queue: serialQueue) {
             response in
             switch response.result {
@@ -111,8 +107,7 @@ struct GitHub {
         var instance = GitHub()
         
         func getAllIssues() {
-            issuesFor(repo: repo) {
-//                issuesFor(repo: repo, queue: serialQueue) {
+            issuesFor(repo: repo, queue: serialQueue) {
                 result in
                 switch result {
                 case .success(let issues):
@@ -126,16 +121,21 @@ struct GitHub {
         
         func getAllComments() {
             for index in 0..<instance.issues.count {
+
+
                 // Fetch all the comments serially
                 // TODO: Fetch the comments concurrently
-                commentsFor(issue: instance.issues[index]) {
-//                    commentsFor(issue: instance.issues[index], queue: serialQueue) {
+                commentsFor(issue: instance.issues[index], queue: serialQueue) {
                     result in
+
+
+
                     switch result {
                     case .success(let comments):
-                        print(comments)
                         instance.issues[index].comments = comments
                         instance.issues[index].uniqueCommenters = uniqueCommentersFor(comments: comments)
+                        let issue = instance.issues[index]
+                        print("index: \(index) \(issue.title) || comments: \(issue.comments.count) || unique = \(issue.uniqueCommenters.count)")
                     case .failure(let error):
                         assert(false)
                         completion(.failure(error))
@@ -150,7 +150,6 @@ struct GitHub {
         }
         
         // Start the process
-        
         getAllIssues()
     }
 }
