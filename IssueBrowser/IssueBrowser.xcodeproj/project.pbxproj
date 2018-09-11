@@ -8,15 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0B14A44550EA403B5F67A23B /* Pods_IssueBrowserTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EF9DD003885E469BC13A9FB /* Pods_IssueBrowserTests.framework */; };
+		833844062147358E006DB7A6 /* IssueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833844052147358E006DB7A6 /* IssueTableViewController.swift */; };
+		8338440821473839006DB7A6 /* IssueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338440721473839006DB7A6 /* IssueTableViewCell.swift */; };
+		8338440A21474265006DB7A6 /* IssueDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8338440921474265006DB7A6 /* IssueDetailViewController.swift */; };
 		8376DDF92141C9D600C3D904 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376DDF82141C9D600C3D904 /* AppDelegate.swift */; };
-		8376DDFB2141C9D600C3D904 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376DDFA2141C9D600C3D904 /* ViewController.swift */; };
 		8376DDFE2141C9D600C3D904 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8376DDFC2141C9D600C3D904 /* Main.storyboard */; };
 		8376DE002141C9D800C3D904 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8376DDFF2141C9D800C3D904 /* Assets.xcassets */; };
 		8376DE032141C9D800C3D904 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8376DE012141C9D800C3D904 /* LaunchScreen.storyboard */; };
 		8376DE0E2141C9D800C3D904 /* IssueBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376DE0D2141C9D800C3D904 /* IssueBrowserTests.swift */; };
+		839DAA0D21477E3A00F046BB /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839DAA0C21477E3A00F046BB /* UIViewController+Alerts.swift */; };
 		83FE51B62142DECA005C0EFE /* Spec.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83FE51B52142DECA005C0EFE /* Spec.txt */; };
 		83FE51BA2142E1FD005C0EFE /* GitHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE51B92142E1FD005C0EFE /* GitHub.swift */; };
-		83FE51BC2142F6CA005C0EFE /* APISample.json in Resources */ = {isa = PBXBuildFile; fileRef = 83FE51BB2142F6CA005C0EFE /* APISample.json */; };
 		83FE51C12142F7F4005C0EFE /* Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FE51C02142F7F4005C0EFE /* Issues.swift */; };
 		CA0D0195E123E3EA56D60E54 /* Pods_IssueBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69F4491C0B2A186D0F9BB3C8 /* Pods_IssueBrowser.framework */; };
 /* End PBXBuildFile section */
@@ -35,9 +37,11 @@
 		298CC8C0674E37C40186D6B0 /* Pods-IssueBrowserTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueBrowserTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IssueBrowserTests/Pods-IssueBrowserTests.release.xcconfig"; sourceTree = "<group>"; };
 		4EF9DD003885E469BC13A9FB /* Pods_IssueBrowserTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueBrowserTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		69F4491C0B2A186D0F9BB3C8 /* Pods_IssueBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IssueBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		833844052147358E006DB7A6 /* IssueTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTableViewController.swift; sourceTree = "<group>"; };
+		8338440721473839006DB7A6 /* IssueTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueTableViewCell.swift; sourceTree = "<group>"; };
+		8338440921474265006DB7A6 /* IssueDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDetailViewController.swift; sourceTree = "<group>"; };
 		8376DDF52141C9D600C3D904 /* IssueBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IssueBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8376DDF82141C9D600C3D904 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8376DDFA2141C9D600C3D904 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8376DDFD2141C9D600C3D904 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8376DDFF2141C9D800C3D904 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8376DE022141C9D800C3D904 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -45,9 +49,9 @@
 		8376DE092141C9D800C3D904 /* IssueBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IssueBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8376DE0D2141C9D800C3D904 /* IssueBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueBrowserTests.swift; sourceTree = "<group>"; };
 		8376DE0F2141C9D800C3D904 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		839DAA0C21477E3A00F046BB /* UIViewController+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alerts.swift"; sourceTree = "<group>"; };
 		83FE51B52142DECA005C0EFE /* Spec.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = Spec.txt; path = ../Spec.txt; sourceTree = "<group>"; };
 		83FE51B92142E1FD005C0EFE /* GitHub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub.swift; sourceTree = "<group>"; };
-		83FE51BB2142F6CA005C0EFE /* APISample.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = APISample.json; sourceTree = "<group>"; };
 		83FE51C02142F7F4005C0EFE /* Issues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issues.swift; sourceTree = "<group>"; };
 		9D735E71221C3E118342B2C4 /* Pods-IssueBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IssueBrowser/Pods-IssueBrowser.debug.xcconfig"; sourceTree = "<group>"; };
 		DF8CB866B82E72D159E9F6EF /* Pods-IssueBrowserTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IssueBrowserTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IssueBrowserTests/Pods-IssueBrowserTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,7 +92,6 @@
 		8376DDEC2141C9D600C3D904 = {
 			isa = PBXGroup;
 			children = (
-				83FE51BB2142F6CA005C0EFE /* APISample.json */,
 				83FE51B52142DECA005C0EFE /* Spec.txt */,
 				8376DDF72141C9D600C3D904 /* IssueBrowser */,
 				8376DE0C2141C9D800C3D904 /* IssueBrowserTests */,
@@ -111,13 +114,16 @@
 			isa = PBXGroup;
 			children = (
 				8376DDF82141C9D600C3D904 /* AppDelegate.swift */,
-				8376DDFA2141C9D600C3D904 /* ViewController.swift */,
 				8376DDFC2141C9D600C3D904 /* Main.storyboard */,
 				8376DDFF2141C9D800C3D904 /* Assets.xcassets */,
 				8376DE012141C9D800C3D904 /* LaunchScreen.storyboard */,
 				8376DE042141C9D800C3D904 /* Info.plist */,
-				83FE51B92142E1FD005C0EFE /* GitHub.swift */,
 				83FE51C02142F7F4005C0EFE /* Issues.swift */,
+				83FE51B92142E1FD005C0EFE /* GitHub.swift */,
+				833844052147358E006DB7A6 /* IssueTableViewController.swift */,
+				8338440721473839006DB7A6 /* IssueTableViewCell.swift */,
+				8338440921474265006DB7A6 /* IssueDetailViewController.swift */,
+				839DAA0C21477E3A00F046BB /* UIViewController+Alerts.swift */,
 			);
 			path = IssueBrowser;
 			sourceTree = "<group>";
@@ -228,7 +234,6 @@
 				83FE51B62142DECA005C0EFE /* Spec.txt in Resources */,
 				8376DE002141C9D800C3D904 /* Assets.xcassets in Resources */,
 				8376DDFE2141C9D600C3D904 /* Main.storyboard in Resources */,
-				83FE51BC2142F6CA005C0EFE /* APISample.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,10 +308,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8376DDFB2141C9D600C3D904 /* ViewController.swift in Sources */,
+				8338440821473839006DB7A6 /* IssueTableViewCell.swift in Sources */,
+				833844062147358E006DB7A6 /* IssueTableViewController.swift in Sources */,
 				83FE51BA2142E1FD005C0EFE /* GitHub.swift in Sources */,
 				8376DDF92141C9D600C3D904 /* AppDelegate.swift in Sources */,
 				83FE51C12142F7F4005C0EFE /* Issues.swift in Sources */,
+				839DAA0D21477E3A00F046BB /* UIViewController+Alerts.swift in Sources */,
+				8338440A21474265006DB7A6 /* IssueDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,7 +478,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YQ27GR84SD;
 				INFOPLIST_FILE = IssueBrowser/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wackybananasoftware.IssueBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -486,7 +497,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YQ27GR84SD;
 				INFOPLIST_FILE = IssueBrowser/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wackybananasoftware.IssueBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -503,7 +517,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YQ27GR84SD;
 				INFOPLIST_FILE = IssueBrowserTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wackybananasoftware.IssueBrowserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -521,7 +539,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YQ27GR84SD;
 				INFOPLIST_FILE = IssueBrowserTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.wackybananasoftware.IssueBrowserTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

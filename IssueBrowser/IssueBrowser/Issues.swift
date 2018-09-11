@@ -6,9 +6,11 @@
 //  Copyright © 2018 Anna Dickinson. All rights reserved.
 //
 
+// Data models matching GitHub API format.
+
 import Foundation
 
-class Issue: Decodable {
+struct Issue: Decodable {
     let comments_url: URL
     let title: String
     let body: String
@@ -23,9 +25,9 @@ class Issue: Decodable {
         case created_at
     }
     
-    // Additional values which don't come from the API directly
+    // Additional values which are set separately (not part of JSON decoding)
     var comments: [Comment] = []
-    var uniqueCommenters: Set<User> = []
+    var uniqueCommenters: [(user: User, count: Int)] = []
 }
 
 struct User: Decodable {
@@ -38,12 +40,17 @@ extension User: Equatable {
     }
 }
 
+extension User: Comparable {
+    static func < (lhs: User, rhs: User) -> Bool {
+        return lhs.login < rhs.login
+    }
+}
+
 extension User: Hashable {
     var hashValue: Int {
         return login.hashValue
     }
 }
-
 struct Comment: Decodable {
     let user: User
 }

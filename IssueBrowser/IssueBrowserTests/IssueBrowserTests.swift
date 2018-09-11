@@ -79,28 +79,4 @@ class IssueBrowserTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 10)
     }
-    
-    // Create and fill in a GitHub instance
-    func testGitHubCreateFor() {
-        // Some test-the-test cases
-        // let testRepo = "jknasdfhhu81378fgh934hrfiasdhfjkhajkshd91398h4gh3rg"
-        // let testRepo = "annabd351/IssueBrowser"
-        let testRepo = GitHub.testRepoName
-        let expectation = XCTestExpectation()
-        GitHub.createFor(repo: testRepo) {
-            result in
-            switch result {
-            case .success(let gitHub):
-                gitHub.issues.forEach {
-                    print($0.uniqueCommenters.count)
-                }
-                XCTAssert(true)
-                expectation.fulfill()
-            case .failure(let error):
-                XCTFail(error.localizedDescription)
-                expectation.fulfill()
-            }
-        }
-        wait(for: [expectation], timeout: 10)
-    }
 }
